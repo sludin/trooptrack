@@ -1,4 +1,4 @@
-# Trooptrack perl API
+# TroopTrack perl API
 
 [swagger-codegen](https://github.com/swagger-api/swagger-codegen#modifying-the-client-library-format) generated perl libraries for TroopTrack.
 
