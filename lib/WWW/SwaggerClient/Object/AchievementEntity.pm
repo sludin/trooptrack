@@ -20,7 +20,7 @@ use base "WWW::SwaggerClient::Object::BaseObject";
 #
 
 my $swagger_types = {
-    'achievement_id' => 'int',
+    'achievement_id' => 'id',
     'name' => 'string',
     'children' => 'ARRAY[AchievementEntity]',
     'description' => 'string'

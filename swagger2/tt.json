@@ -1,1 +1,2040 @@
-{"info":{"version":"v1","title":"Title was not specified"},"swagger":"2.0","definitions":{"TroopPhotoEntity":{"properties":{"troop_photo_id":{"type":"integer","description":"ID of the Troop Photo record"},"photo":{"type":"integer","description":"URL of the photo"}}},"EventTypeEntity":{"properties":{"color":{"type":"string","description":"Color used to display events of this type on the TroopTrack calendar"},"name":{"type":"string","description":"Name of the event type (Campout, Meeting, etc)"},"event_type_id":{"type":"integer","description":"ID of the event type record"}}},"AchievementEntity":{"properties":{"achievement_id":{"type":"integer","description":"ID of the Achievement Record"},"name":{"type":"string","description":"Name of the achievement"},"children":{"type":"array","description":"Array of requirements","items":{"$ref":"#/definitions/AchievementEntity"}},"description":{"type":"string","description":"Detailed description of the achievement"}}},"EventDetailsEntity":{"properties":{"rsvp_deadline":{"type":"string","description":"Date by which RSVPs must be submitted"},"event_id":{"type":"integer","description":"ID of the event record"},"is_registration_closed?":{"type":"string","description":"Indicates if registration for this event is closed."},"hiking_miles":{"type":"string","description":"Number of hiking miles that will occur at this event"},"payment_required_to_rsvp":{"type":"string","description":"Indicates if payment is required to RSVP for this event. You cannot RSVP through the API if this is true."},"activity_at":{"type":"string","description":"Start time of the event in 2014-11-20T02:00:00.000-06:00 format"},"end_at":{"type":"string","description":"End time of the event in 2014-11-20T02:00:00.000-06:00 format"},"event_type":{"type":"string","description":"Type of the event (Campout, Hike, Meeting, etc)"},"vcal":{"type":"string","description":"VCAL representation of the event"},"description":{"type":"string","description":"Description of the event"},"adult_fee":{"type":"string","description":"Event fees required for each adult attending"},"camping_nights":{"type":"string","description":"Number of nights of camping that will occur at this event"},"dues":{"type":"string","description":"Event fees required for each youth attending"},"guests_allowed":{"type":"string","description":"Indicates whether guests are allowed"},"canoeing_miles":{"type":"string","description":"Number of canoeing miles that will occur at this event"},"title":{"type":"string","description":"Title of the event"},"service_hours":{"type":"string","description":"Number of service hours per attendee that will occur at this event"}}},"EventEntity":{"properties":{"location":{"type":"string","description":"Location of the event"},"event_type":{"type":"string","description":"Type of the event (Campout, Hike, Meeting, etc)"},"is_registration_closed?":{"type":"string","description":"Indicates if registration for this event is closed."},"color":{"type":"string","description":"Color of the event, as specified by the creator"},"payment_required_to_rsvp":{"type":"string","description":"Indicates if payment is required to RSVP for this event. You cannot RSVP through the API if this is true."},"activity_at":{"type":"string","description":"Start time of the event in 2014-11-20T02:00:00.000-06:00 format"},"title":{"type":"string","description":"Title of the event"},"end_at":{"type":"string","description":"End time of the event in 2014-11-20T02:00:00.000-06:00 format"},"text_color":{"type":"string","description":"Color for text that is visible on a background of the color of the event"}}},"AwardTypeEntity":{"properties":{"active_achievements":{"type":"array","description":"Array of Achievements for this award type","items":{"$ref":"#/definitions/AchievementEntity"}},"award_type_id":{"type":"integer","description":"ID of the Award Type Record"},"name":{"type":"string","description":"Name of the Award Type"}}},"UserPrivilegesEntity":{"properties":{"privileges":{"type":"array","description":"Names of privileges this user has.","items":{"type":"string"}},"troop_type":{"type":"string","description":"Description of the type of unit this user belongs to."},"troop":{"type":"string","description":"Full number or name identifying the unit this user belongs to."},"troop_type_id":{"type":"integer","description":"ID of the unit type record"},"cache_scope":{"type":"string","description":"This value is used to identify the contents of the offline cache that apply to this user."},"troop_number":{"type":"string","description":"Number of the unit this user belongs to."},"troop_id":{"type":"integer","description":"ID of the unit this user belongs to"},"user_id":{"type":"integer","description":"ID of the user record"},"token":{"type":"string","description":"API authentication token for this user"}}},"MailingListEntity":{"properties":{"email":{"type":"string","description":"Email address of the mailing list"},"mailing_list_id":{"type":"integer","description":"ID of the mailing list record"},"name":{"type":"string","description":"Name used to identify the mailing list"}}},"PhotoAlbumEntity":{"properties":{"photo_album_id":{"type":"integer","description":"ID of the photo album record"},"taken_on":{"type":"string","description":"Date the album was taken on as specified by the user"},"photo_count":{"type":"integer","description":"Number of photos in this album"},"name":{"type":"string","description":"Name used to identify the photo album"},"troop_photos":{"type":"array","description":"An array of troop photos","items":{"$ref":"#/definitions/TroopPhotoEntity"}}}}},"basePath":"/api","host":"trooptrack.com","tags":[{"name":"achievements","description":"Operations about achievements"},{"name":"award_types","description":"Operations about award_types"},{"name":"events","description":"Operations about events"},{"name":"mailing_lists","description":"Operations about mailing_lists"},{"name":"offline","description":"Operations about offlines"},{"name":"photo_albums","description":"Operations about photo_albums"},{"name":"tokens","description":"Operations about tokens"},{"name":"user_achievements","description":"Operations about user_achievements"},{"name":"users","description":"Operations about users"},{"name":"youths","description":"Operations about youths"}],"paths":{"/v1/user_achievements/{id}":{"post":{"parameters":[{"required":true,"in":"header","name":"X-Partner-Token","type":"string","description":"Your secret partner token"},{"required":true,"in":"header","name":"X-User-Token","type":"string","description":"The token you recieved when you authenticated the user"},{"required":true,"in":"path","name":"id","type":"integer","description":"Id of the user achievement being updated"},{"required":true,"in":"formData","name":"award_type_id","type":"integer","description":"Id of the Award Type for the achievement being updated"},{"required":false,"in":"formData","name":"achievement[completed_on]","type":"string","description":"Date the achievement was completed in YYYY-MM-DD format"},{"required":false,"in":"formData","name":"achievement[award_card_front_image_content]","type":"string","description":"Base 64 encoded image content of the front of an award card for the achievement. Currently ignored unless the achievement is a BSA Merit Badge."},{"required":false,"in":"formData","name":"achievement[award_card_images_type]","type":"string","description":"File extension of the award card images - must be the same type for the front and back, if included. Currently ignored unless the achievement is a BSA Merit Badge."},{"required":false,"in":"formData","name":"achievement[award_card_back_image_content]","type":"string","description":"Base 64 encoded image content of the back of an award card for the achievement. Currently ignored unless the achievement is a BSA Merit Badge."},{"required":false,"in":"formData","name":"achievement[children][id]","type":"integer","description":"Id of the requirement to be updated"},{"required":false,"in":"formData","name":"achievement[children][completed_on]","type":"string","description":"Date the requirement was completed in YYYY-MM-DD format"}],"operationId":"POST--version-user_achievements--id","summary":"Update achievment details, including requirements, for a given achievement","produces":["application/xml","application/json","application/octet-stream","text/plain"],"responses":{"401":{"description":"401 Insufficient Privileges"},"200":{"schema":{"type":"string"},"description":"No response was specified"},"404":{"description":"404 Achievement not found"}},"description":"","tags":["user_achievements"]},"get":{"parameters":[{"required":true,"in":"header","name":"X-Partner-Token","type":"string","description":"Your secret partner token"},{"required":true,"in":"header","name":"X-User-Token","type":"string","description":"The token you recieved when you authenticated the user"},{"required":true,"in":"path","name":"id","type":"integer","description":"Id of the achievement being updated"},{"required":true,"in":"query","name":"award_type_id","type":"integer","description":"Id of the Award Type for the achievement being updated"}],"operationId":"GET--version-user_achievements--id","summary":"Returns achievment details, including requirements, for a given achievement","produces":["application/xml","application/json","application/octet-stream","text/plain"],"responses":{"401":{"description":"401 Unauthorized user"},"200":{"schema":{"type":"string"},"description":"No response was specified"},"404":{"description":"404 User not found"}},"description":"","tags":["user_achievements"]}},"/v1/events/{id}/rsvp":{"put":{"parameters":[{"required":true,"in":"header","name":"X-Partner-Token","type":"string","description":"Your secret partner token"},{"required":true,"in":"header","name":"X-User-Token","type":"string","description":"The token you recieved when you authenticated the user"},{"required":false,"in":"path","name":"id","type":"string","description":""},{"required":true,"in":"formData","name":"user_id","type":"integer","description":"ID of the user for whom you are RSVP'ing. Must be within your scope as a user AND must be invited to the event."},{"required":true,"in":"formData","name":"status_cd","type":"string","description":"yes: Coming. no: Not coming. tbd: No clue."},{"required":false,"in":"formData","name":"number_of_youth_guests","type":"integer","description":null},{"required":false,"in":"formData","name":"number_of_adult_guests","type":"integer","description":null}],"operationId":"PUT--version-events--id-rsvp","summary":"RSVP to an event","produces":["application/xml","application/json","application/octet-stream","text/plain"],"responses":{"401":{"description":"401 User not invited"},"200":{"schema":{"$ref":"#/definitions/EventDetailsEntity"},"description":"No response was specified"},"404":{"description":"404 Event not found"}},"description":"","tags":["events"]}},"/v1/events/{event_id}/attendance":{"post":{"parameters":[{"required":true,"in":"header","name":"X-Partner-Token","type":"string","description":"Your secret partner token"},{"required":true,"in":"header","name":"X-User-Token","type":"string","description":"The token you recieved when you authenticated the user"},{"required":false,"in":"path","name":"event_id","type":"string","description":""},{"required":true,"in":"formData","name":"event_trackers[user_id]","type":"integer","description":"ID of the user for whom you are RSVP'ing. Must be within your scope as a user AND must be invited to the event."},{"required":true,"in":"formData","name":"event_trackers[attendance_status_cd]","type":"string","description":"0: Did not attend. 1: Attended. 2: No clue."},{"required":false,"in":"formData","name":"event_trackers[number_of_adult_guests]","type":"integer","description":"How many adult guests will this person bring?"},{"required":false,"in":"formData","name":"event_trackers[number_of_youth_guests]","type":"integer","description":"How many youth guests will this person bring?"}],"operationId":"POST--version-events--event_id-attendance","summary":"Record attendance at an event","produces":["application/xml","application/json","application/octet-stream","text/plain"],"responses":{"401":{"description":"401 Unauthorized user"},"200":{"schema":{"$ref":"#/definitions/EventDetailsEntity"},"description":"No response was specified"},"404":{"description":"404 Event not found"}},"description":"","tags":["events"]}},"/v1/user_achievements":{"get":{"parameters":[{"required":true,"in":"header","name":"X-Partner-Token","type":"string","description":"Your secret partner token"},{"required":true,"in":"header","name":"X-User-Token","type":"string","description":"The token you recieved when you authenticated the user"},{"required":false,"in":"query","name":"award_type_id","type":"integer","description":null},{"required":false,"in":"query","name":"user_id","type":"integer","description":null},{"required":false,"in":"query","name":"patrol_id","type":"integer","description":null},{"required":false,"in":"query","name":"achievement_id","type":"integer","description":null}],"operationId":"GET--version-user_achievements","summary":"Returns a list of achievements earned by users based on query parameters.\n              Query parameters can be combined as desired.\n              Award type id is required if achievement id is provided","produces":["application/xml","application/json","application/octet-stream","text/plain"],"responses":{"401":{"description":"Unauthorized User"},"200":{"schema":{"type":"string"},"description":"No response was specified"}},"description":"","tags":["user_achievements"]}},"/v1/mailing_lists/{id}":{"post":{"parameters":[{"required":true,"in":"header","name":"X-Partner-Token","type":"string","description":"Your secret partner token"},{"required":true,"in":"header","name":"X-User-Token","type":"string","description":"The token you recieved when you authenticated the user"},{"required":true,"in":"path","name":"id","type":"string","description":"The ID of the list you want to post a message to"},{"required":false,"in":"formData","name":"message[subject]","type":"string","description":null},{"required":false,"in":"formData","name":"message[body]","type":"string","description":null}],"operationId":"POST--version-mailing_lists--id","summary":"Post a message to a mailing list","produces":["application/xml","application/json","application/octet-stream","text/plain"],"responses":{"401":{"description":"Unauthorized User"},"200":{"schema":{"type":"string"},"description":"No response was specified"},"404":{"description":"404 Mailing list not found"}},"description":"","tags":["mailing_lists"]}},"/v1/events":{"post":{"parameters":[{"required":true,"in":"header","name":"X-Partner-Token","type":"string","description":"Your secret partner token"},{"required":true,"in":"header","name":"X-User-Token","type":"string","description":"The token you recieved when you authenticated the user"},{"required":false,"in":"formData","name":"event[title]","type":"string","description":null},{"required":false,"in":"formData","name":"event[event_type_id]","type":"string","description":"ID of an event type returned by the events/available_types API"},{"required":false,"in":"formData","name":"event[start_at]","type":"string","description":"Format: YYYY-MM-DDTHH:MM-0600 i.e. 2015-07-04T13:00-0600"},{"required":false,"in":"formData","name":"event[end_at]","type":"string","description":"Format: YYYY-MM-DDTHH:MM-0600 i.e. 2015-07-04T13:00-0600"},{"required":false,"in":"formData","name":"event[location]","type":"string","description":null},{"required":false,"in":"formData","name":"event[description]","type":"string","description":null},{"required":false,"in":"formData","name":"event[inviteable_tokens]","type":"string","description":"An array of strings describing who to invite. Each token must include the class and ID of the Troop, Patrol, or User to invite.\n              For example, to invite the whole troop, you would provide ['Troop-1211'], or to invite patrol 11911 and user 1223 and user 3344 then you would\n              provide ['Patrol-11911', 'User-1223', 'User-3344']"},{"required":false,"in":"formData","name":"event[camping_nights]","type":"string","description":"How many nights do you expect to camp?"},{"required":false,"in":"formData","name":"event[hiking_miles]","type":"string","description":"Expected number of miles to be hiked"},{"required":false,"in":"formData","name":"event[canoeing_miles]","type":"string","description":"Expected number of miles to be traveled by canoe"},{"required":false,"in":"formData","name":"event[dues]","type":"string","description":"Fee for youth to attend"},{"required":false,"in":"formData","name":"event[adult_fee]","type":"string","description":"Fee for adults to attend"},{"required":false,"in":"formData","name":"event[rsvp_deadline]","type":"string","description":null},{"required":false,"in":"formData","name":"event[send_invites_when]","type":"string","description":"Number of days before the event to send an invitation. Use 999 to indicate sending the invite immediately."},{"required":false,"in":"formData","name":"event[send_reminder_when]","type":"string","description":"Number of days before the event to send a reminder."},{"required":false,"in":"formData","name":"event[service_hours]","type":"string","description":"Number of service hours expected to be completed"}],"operationId":"POST--version-events","summary":"Create an event","produces":["application/xml","application/json","application/octet-stream","text/plain"],"responses":{"401":{"description":"401 Unauthorized user"},"200":{"schema":{"$ref":"#/definitions/EventDetailsEntity"},"description":"No response was specified"},"500":{"description":"500 Event could not be created"}},"description":"","tags":["events"]},"get":{"parameters":[{"required":true,"in":"header","name":"X-Partner-Token","type":"string","description":"Your secret partner token"},{"required":true,"in":"header","name":"X-User-Token","type":"string","description":"The token you recieved when you authenticated the user"},{"required":true,"in":"query","name":"start_on","type":"string","description":"an iso8601 date (YYYY-MM-DD) indicating the beginning of the date range to include events"},{"required":true,"in":"query","name":"end_on","type":"string","description":"an iso8601 date (YYYY-MM-DD) indicating the end of the date range to include events"}],"operationId":"GET--version-events","summary":"Returns a list of events for the date range provided","produces":["application/xml","application/json","application/octet-stream","text/plain"],"responses":{"401":{"description":"Unauthorized User"},"200":{"schema":{"$ref":"#/definitions/EventEntity"},"description":"No response was specified"},"400":{"description":"Invalid date range"}},"description":"","tags":["events"]}},"/v1/achievements":{"get":{"parameters":[{"required":true,"in":"header","name":"X-Partner-Token","type":"string","description":"Your secret partner token"},{"required":true,"in":"header","name":"X-User-Token","type":"string","description":"The token you recieved when you authenticated the user"}],"operationId":"GET--version-achievements","summary":"Returns a list of available achievements for the member","produces":["application/xml","application/json","application/octet-stream","text/plain"],"responses":{"401":{"description":"Unauthorized User"},"200":{"schema":{"$ref":"#/definitions/AchievementEntity"},"description":"No response was specified"}},"description":"","tags":["achievements"]}},"/v1/users":{"get":{"parameters":[{"required":true,"in":"header","name":"X-Partner-Token","type":"string","description":"Your secret partner token"},{"required":true,"in":"header","name":"X-User-Token","type":"string","description":"The token you recieved when you authenticated the user"}],"operationId":"GET--version-users","summary":"Returns a list of users","produces":["application/xml","application/json","application/octet-stream","text/plain"],"responses":{"401":{"description":"Unauthorized User"},"200":{"schema":{"type":"string"},"description":"No response was specified"}},"description":"","tags":["users"]}},"/v1/users/{id}":{"post":{"parameters":[{"required":true,"in":"header","name":"X-Partner-Token","type":"string","description":"Your secret partner token"},{"required":true,"in":"header","name":"X-User-Token","type":"string","description":"The token you recieved when you authenticated the user"},{"required":false,"in":"path","name":"id","type":"string","description":""},{"required":false,"in":"formData","name":"user[last_name]","type":"string","description":null},{"required":false,"in":"formData","name":"user[first_name]","type":"string","description":null},{"required":false,"in":"formData","name":"user[email]","type":"string","description":null},{"required":false,"in":"formData","name":"user[born_on]","type":"string","description":null},{"required":false,"in":"formData","name":"user[home_phone]","type":"string","description":null},{"required":false,"in":"formData","name":"user[cell_phone]","type":"string","description":null},{"required":false,"in":"formData","name":"user[profile_photo_file_name]","type":"string","description":null},{"required":false,"in":"formData","name":"user[profile_photo_file_content]","type":"string","description":null}],"operationId":"POST--version-users--id","summary":"Update detailed information about a user","produces":["application/xml","application/json","application/octet-stream","text/plain"],"responses":{"403":{"description":"403 Unprivileged user"},"401":{"description":"401 Unauthorized user"},"200":{"schema":{"type":"string"},"description":"No response was specified"},"404":{"description":"404 User not found"}},"description":"","tags":["users"]},"get":{"parameters":[{"required":true,"in":"header","name":"X-Partner-Token","type":"string","description":"Your secret partner token"},{"required":true,"in":"header","name":"X-User-Token","type":"string","description":"The token you recieved when you authenticated the user"},{"required":false,"in":"path","name":"id","type":"string","description":""}],"operationId":"GET--version-users--id","summary":"Returns detailed information about a user","produces":["application/xml","application/json","application/octet-stream","text/plain"],"responses":{"401":{"description":"401 Unauthorized user"},"200":{"schema":{"type":"string"},"description":"No response was specified"},"404":{"description":"404 User not found"}},"description":"","tags":["users"]}},"/v1/mailing_lists":{"get":{"parameters":[{"required":true,"in":"header","name":"X-Partner-Token","type":"string","description":"Your secret partner token"},{"required":true,"in":"header","name":"X-User-Token","type":"string","description":"The token you recieved when you authenticated the user"}],"operationId":"GET--version-mailing_lists","summary":"Returns a list of mailing lists relevant to the user","produces":["application/xml","application/json","application/octet-stream","text/plain"],"responses":{"401":{"description":"Unauthorized User"},"200":{"schema":{"$ref":"#/definitions/MailingListEntity"},"description":"No response was specified"}},"description":"","tags":["mailing_lists"]}},"/v1/achievements/{id}":{"get":{"parameters":[{"required":true,"in":"header","name":"X-Partner-Token","type":"string","description":"Your secret partner token"},{"required":true,"in":"header","name":"X-User-Token","type":"string","description":"The token you recieved when you authenticated the user"},{"required":false,"in":"path","name":"id","type":"string","description":""},{"required":true,"in":"query","name":"award_type_id","type":"integer","description":null}],"operationId":"GET--version-achievements--id","summary":"Returns detailed information about an achievement","produces":["application/xml","application/json","application/octet-stream","text/plain"],"responses":{"401":{"description":"401 Unauthorized user"},"200":{"schema":{"$ref":"#/definitions/AchievementEntity"},"description":"No response was specified"},"404":{"description":"404 Achievement not found"}},"description":"","tags":["achievements"]}},"/v1/events/{id}":{"get":{"parameters":[{"required":true,"in":"header","name":"X-Partner-Token","type":"string","description":"Your secret partner token"},{"required":true,"in":"header","name":"X-User-Token","type":"string","description":"The token you recieved when you authenticated the user"},{"required":false,"in":"path","name":"id","type":"string","description":""}],"operationId":"GET--version-events--id","summary":"Returns detailed information about an event","produces":["application/xml","application/json","application/octet-stream","text/plain"],"responses":{"401":{"description":"401 Unauthorized user"},"200":{"schema":{"$ref":"#/definitions/EventDetailsEntity"},"description":"No response was specified"},"404":{"description":"404 Event not found"}},"description":"","tags":["events"]}},"/v1/award_types/{id}":{"get":{"parameters":[{"required":true,"in":"header","name":"X-Partner-Token","type":"string","description":"Your secret partner token"},{"required":true,"in":"header","name":"X-User-Token","type":"string","description":"The token you recieved when you authenticated the user"},{"required":false,"in":"path","name":"id","type":"string","description":""}],"operationId":"GET--version-award_types--id","summary":"Returns active achievements for a given award type.","produces":["application/xml","application/json","application/octet-stream","text/plain"],"responses":{"401":{"description":"401 Unauthorized user"},"200":{"schema":{"$ref":"#/definitions/AwardTypeEntity"},"description":"No response was specified"},"404":{"description":"404 Award type not found"}},"description":"","tags":["award_types"]}},"/v1/tokens":{"get":{"parameters":[{"required":true,"in":"header","name":"X-Partner-Token","type":"string","description":"Your secret partner token"},{"required":true,"in":"header","name":"X-User-Token","type":"string","description":"The token you recieved when you authenticated the user"}],"operationId":"GET--version-tokens","summary":"Returns detailed information about a user's privileges","produces":["application/xml","application/json","application/octet-stream","text/plain"],"responses":{"401":{"description":"401 Unauthorized user"},"200":{"schema":{"$ref":"#/definitions/UserPrivilegesEntity"},"description":"No response was specified"}},"description":"","tags":["tokens"]},"post":{"parameters":[{"required":true,"in":"header","name":"X-Partner-Token","type":"string","description":"Your secret partner token"},{"required":true,"in":"header","name":"X-Username","type":"string","description":"TroopTrack user name"},{"required":true,"in":"header","name":"X-User-Password","type":"string","description":"Password of the user"}],"operationId":"POST--version-tokens","summary":"Gets authentication and privilege information for a user account","produces":["application/xml","application/json","application/octet-stream","text/plain"],"responses":{"401":{"description":"401 Unauthorized user"},"200":{"schema":{"$ref":"#/definitions/UserPrivilegesEntity"},"description":"No response was specified"}},"description":"","tags":["tokens"]}},"/v1/youths":{"post":{"parameters":[{"required":true,"in":"header","name":"X-Partner-Token","type":"string","description":"Your secret partner token"},{"required":true,"in":"header","name":"X-User-Token","type":"string","description":"The token you recieved when you authenticated the user"},{"required":false,"in":"formData","name":"youth[last_name]","type":"string","description":null},{"required":false,"in":"formData","name":"youth[first_name]","type":"string","description":null},{"required":false,"in":"formData","name":"youth[email]","type":"string","description":null},{"required":false,"in":"formData","name":"youth[born_on]","type":"string","description":null},{"required":false,"in":"formData","name":"youth[scout]","type":"string","description":null},{"required":false,"in":"formData","name":"youth[home_phone]","type":"string","description":null},{"required":false,"in":"formData","name":"youth[cell_phone]","type":"string","description":null},{"required":false,"in":"formData","name":"youth[patrol_id]","type":"integer","description":null},{"required":false,"in":"formData","name":"youth[household_id]","type":"integer","description":null},{"required":false,"in":"formData","name":"youth[profile_photo]","type":"string","description":null},{"required":false,"in":"formData","name":"youth[leadership_position_id]","type":"integer","description":null},{"required":false,"in":"formData","name":"youth[create_money_account]","type":"boolean","description":null},{"required":false,"in":"formData","name":"youth[send_invite]","type":"boolean","description":null}],"operationId":"POST--version-youths","summary":"Create a youth","produces":["application/xml","application/json","application/octet-stream","text/plain"],"responses":{"403":{"description":"403 Unprivileged user"},"401":{"description":"401 Unauthorized user"},"200":{"schema":{"type":"string"},"description":"No response was specified"}},"description":"","tags":["youths"]}},"/v1/user_achievements/parameters":{"get":{"parameters":[{"required":true,"in":"header","name":"X-Partner-Token","type":"string","description":"Your secret partner token"},{"required":true,"in":"header","name":"X-User-Token","type":"string","description":"The token you recieved when you authenticated the user"}],"operationId":"GET--version-user_achievements-parameters","summary":"Returns a list of possible values to be used in querying","produces":["application/xml","application/json","application/octet-stream","text/plain"],"responses":{"401":{"description":"Unauthorized User"},"200":{"schema":{"type":"string"},"description":"No response was specified"}},"description":"","tags":["user_achievements"]}},"/v1/events/types":{"get":{"parameters":[{"required":true,"in":"header","name":"X-Partner-Token","type":"string","description":"Your secret partner token"},{"required":true,"in":"header","name":"X-User-Token","type":"string","description":"The token you recieved when you authenticated the user"}],"operationId":"GET--version-events-types","summary":"Returns event types available for a troop","produces":["application/xml","application/json","application/octet-stream","text/plain"],"responses":{"401":{"description":"401 Unauthorized user"},"200":{"schema":{"$ref":"#/definitions/EventTypeEntity"},"description":"No response was specified"}},"description":"","tags":["events"]}},"/v1/offline":{"get":{"parameters":[{"required":true,"in":"header","name":"X-Partner-Token","type":"string","description":"Your secret partner token"},{"required":true,"in":"header","name":"X-User-Token","type":"string","description":"The token you recieved when you authenticated the user"},{"required":true,"in":"query","name":"troop_id","type":"string","description":null}],"operationId":"GET--version-offline","summary":"Returns all troop data for cacheing prior to going offline","produces":["application/xml","application/json","application/octet-stream","text/plain"],"responses":{"401":{"description":"Unauthorized User"},"200":{"schema":{"type":"string"},"description":"No response was specified"}},"description":"","tags":["offline"]}},"/v1/photo_albums/{id}":{"post":{"parameters":[{"required":true,"in":"header","name":"X-Partner-Token","type":"string","description":"Your secret partner token"},{"required":true,"in":"header","name":"X-User-Token","type":"string","description":"The token you recieved when you authenticated the user"},{"required":true,"in":"path","name":"id","type":"string","description":null},{"required":true,"in":"formData","name":"photo_file_extension","type":"string","description":null},{"required":true,"in":"formData","name":"photo_file_content","type":"string","description":null},{"required":false,"in":"formData","name":"album_name","type":"string","description":null}],"operationId":"POST--version-photo_albums--id","summary":"Upload a new photo to a photo album","produces":["application/xml","application/json","application/octet-stream","text/plain"],"responses":{"403":{"description":"403 Unprivileged user"},"401":{"description":"401 Unauthorized user"},"200":{"schema":{"$ref":"#/definitions/PhotoAlbumEntity"},"description":"No response was specified"},"404":{"description":"404 Album not found"}},"description":"","tags":["photo_albums"]},"get":{"parameters":[{"required":true,"in":"header","name":"X-Partner-Token","type":"string","description":"Your secret partner token"},{"required":true,"in":"header","name":"X-User-Token","type":"string","description":"The token you recieved when you authenticated the user"},{"required":true,"in":"path","name":"id","type":"string","description":null}],"operationId":"GET--version-photo_albums--id","summary":"Returns detailed information about a photo album, including photos","produces":["application/xml","application/json","application/octet-stream","text/plain"],"responses":{"401":{"description":"401 Unauthorized user"},"200":{"schema":{"$ref":"#/definitions/PhotoAlbumEntity"},"description":"No response was specified"},"404":{"description":"404 Album not found"}},"description":"","tags":["photo_albums"]}},"/v1/photo_albums":{"get":{"parameters":[{"required":true,"in":"header","name":"X-Partner-Token","type":"string","description":"Your secret partner token"},{"required":true,"in":"header","name":"X-User-Token","type":"string","description":"The token you recieved when you authenticated the user"}],"operationId":"GET--version-photo_albums","summary":"Returns a list of photo albums relevant to the user. Photos are not returned on this endpoint.","produces":["application/xml","application/json","application/octet-stream","text/plain"],"responses":{"401":{"description":"Unauthorized User"},"200":{"schema":{"$ref":"#/definitions/PhotoAlbumEntity"},"description":"No response was specified"}},"description":"","tags":["photo_albums"]}},"/v1/award_types":{"get":{"parameters":[{"required":true,"in":"header","name":"X-Partner-Token","type":"string","description":"Your secret partner token"},{"required":true,"in":"header","name":"X-User-Token","type":"string","description":"The token you recieved when you authenticated the user"}],"operationId":"GET--version-award_types","summary":"Returns a list of available award types for the member. Active achievements are not included.","produces":["application/xml","application/json","application/octet-stream","text/plain"],"responses":{"401":{"description":"Unauthorized User"},"200":{"schema":{"$ref":"#/definitions/AwardTypeEntity"},"description":"No response was specified"}},"description":"","tags":["award_types"]}}},"schemes":["https"]}
+
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "v1",
+    "title": "Title was not specified"
+  },
+  "paths": {
+    "/v1/achievements/{id}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "#/definitions/AchievementEntity"
+            }
+          },
+          "401": {
+            "description": "401 Unauthorized user"
+          },
+          "404": {
+            "description": "404 Achievement not found"
+          }
+        },
+        "description": "",
+        "tags": [
+          "achievements"
+        ],
+        "summary": "Returns detailed information about an achievement",
+        "operationId": "GET--version-achievements--id",
+        "produces": [
+          "application/xml",
+          "application/json",
+          "application/octet-stream",
+          "text/plain"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "description": "Your secret partner token",
+            "name": "X-Partner-Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "description": "The token you recieved when you authenticated the user",
+            "name": "X-User-Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "description": "",
+            "name": "id",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "description": null,
+            "name": "award_type_id",
+            "required": true,
+            "type": "integer"
+          }
+        ]
+      }
+    },
+    "/v1/achievements": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "#/definitions/AchievementEntity"
+            }
+          },
+          "401": {
+            "description": "Unauthorized User"
+          }
+        },
+        "description": "",
+        "tags": [
+          "achievements"
+        ],
+        "summary": "Returns a list of available achievements for the member",
+        "operationId": "GET--version-achievements",
+        "produces": [
+          "application/xml",
+          "application/json",
+          "application/octet-stream",
+          "text/plain"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "description": "Your secret partner token",
+            "name": "X-Partner-Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "description": "The token you recieved when you authenticated the user",
+            "name": "X-User-Token",
+            "required": true,
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "/v1/award_types/{id}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "#/definitions/AwardTypeEntity"
+            }
+          },
+          "401": {
+            "description": "401 Unauthorized user"
+          },
+          "404": {
+            "description": "404 Award type not found"
+          }
+        },
+        "description": "",
+        "tags": [
+          "award_types"
+        ],
+        "summary": "Returns active achievements for a given award type.",
+        "operationId": "GET--version-award_types--id",
+        "produces": [
+          "application/xml",
+          "application/json",
+          "application/octet-stream",
+          "text/plain"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "description": "Your secret partner token",
+            "name": "X-Partner-Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "description": "The token you recieved when you authenticated the user",
+            "name": "X-User-Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "description": "",
+            "name": "id",
+            "required": false,
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "/v1/award_types": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "#/definitions/AwardTypeEntity"
+            }
+          },
+          "401": {
+            "description": "Unauthorized User"
+          }
+        },
+        "description": "",
+        "tags": [
+          "award_types"
+        ],
+        "summary": "Returns a list of available award types for the member. Active achievements are not included.",
+        "operationId": "GET--version-award_types",
+        "produces": [
+          "application/xml",
+          "application/json",
+          "application/octet-stream",
+          "text/plain"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "description": "Your secret partner token",
+            "name": "X-Partner-Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "description": "The token you recieved when you authenticated the user",
+            "name": "X-User-Token",
+            "required": true,
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "/v1/events": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "#/definitions/EventEntity"
+            }
+          },
+          "400": {
+            "description": "Invalid date range"
+          },
+          "401": {
+            "description": "Unauthorized User"
+          }
+        },
+        "description": "",
+        "tags": [
+          "events"
+        ],
+        "summary": "Returns a list of events for the date range provided",
+        "operationId": "GET--version-events",
+        "produces": [
+          "application/xml",
+          "application/json",
+          "application/octet-stream",
+          "text/plain"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "description": "Your secret partner token",
+            "name": "X-Partner-Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "description": "The token you recieved when you authenticated the user",
+            "name": "X-User-Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "description": "an iso8601 date (YYYY-MM-DD) indicating the beginning of the date range to include events",
+            "name": "start_on",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "description": "an iso8601 date (YYYY-MM-DD) indicating the end of the date range to include events",
+            "name": "end_on",
+            "required": true,
+            "type": "string"
+          }
+        ]
+      },
+      "post": {
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "#/definitions/EventDetailsEntity"
+            }
+          },
+          "401": {
+            "description": "401 Unauthorized user"
+          },
+          "500": {
+            "description": "500 Event could not be created"
+          }
+        },
+        "description": "",
+        "tags": [
+          "events"
+        ],
+        "summary": "Create an event",
+        "operationId": "POST--version-events",
+        "produces": [
+          "application/xml",
+          "application/json",
+          "application/octet-stream",
+          "text/plain"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "description": "Your secret partner token",
+            "name": "X-Partner-Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "description": "The token you recieved when you authenticated the user",
+            "name": "X-User-Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": null,
+            "name": "event[title]",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": "ID of an event type returned by the events/available_types API",
+            "name": "event[event_type_id]",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": "Format: YYYY-MM-DDTHH:MM-0600 i.e. 2015-07-04T13:00-0600",
+            "name": "event[start_at]",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": "Format: YYYY-MM-DDTHH:MM-0600 i.e. 2015-07-04T13:00-0600",
+            "name": "event[end_at]",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": null,
+            "name": "event[location]",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": null,
+            "name": "event[description]",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": "An array of strings describing who to invite. Each token must include the class and ID of the Troop, Patrol, or User to invite.\n              For example, to invite the whole troop, you would provide ['Troop-1211'], or to invite patrol 11911 and user 1223 and user 3344 then you would\n              provide ['Patrol-11911', 'User-1223', 'User-3344']",
+            "name": "event[inviteable_tokens]",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": "How many nights do you expect to camp?",
+            "name": "event[camping_nights]",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": "Expected number of miles to be hiked",
+            "name": "event[hiking_miles]",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": "Expected number of miles to be traveled by canoe",
+            "name": "event[canoeing_miles]",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": "Fee for youth to attend",
+            "name": "event[dues]",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": "Fee for adults to attend",
+            "name": "event[adult_fee]",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": null,
+            "name": "event[rsvp_deadline]",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": "Number of days before the event to send an invitation. Use 999 to indicate sending the invite immediately.",
+            "name": "event[send_invites_when]",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": "Number of days before the event to send a reminder.",
+            "name": "event[send_reminder_when]",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": "Number of service hours expected to be completed",
+            "name": "event[service_hours]",
+            "required": false,
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "/v1/events/types": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "#/definitions/EventTypeEntity"
+            }
+          },
+          "401": {
+            "description": "401 Unauthorized user"
+          }
+        },
+        "description": "",
+        "tags": [
+          "events"
+        ],
+        "summary": "Returns event types available for a troop",
+        "operationId": "GET--version-events-types",
+        "produces": [
+          "application/xml",
+          "application/json",
+          "application/octet-stream",
+          "text/plain"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "description": "Your secret partner token",
+            "name": "X-Partner-Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "description": "The token you recieved when you authenticated the user",
+            "name": "X-User-Token",
+            "required": true,
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "/v1/events/{id}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "#/definitions/EventDetailsEntity"
+            }
+          },
+          "401": {
+            "description": "401 Unauthorized user"
+          },
+          "404": {
+            "description": "404 Event not found"
+          }
+        },
+        "description": "",
+        "tags": [
+          "events"
+        ],
+        "summary": "Returns detailed information about an event",
+        "operationId": "GET--version-events--id",
+        "produces": [
+          "application/xml",
+          "application/json",
+          "application/octet-stream",
+          "text/plain"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "description": "Your secret partner token",
+            "name": "X-Partner-Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "description": "The token you recieved when you authenticated the user",
+            "name": "X-User-Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "description": "",
+            "name": "id",
+            "required": false,
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "/v1/events/{id}/rsvp": {
+      "put": {
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "#/definitions/EventDetailsEntity"
+            }
+          },
+          "401": {
+            "description": "401 User not invited"
+          },
+          "404": {
+            "description": "404 Event not found"
+          }
+        },
+        "description": "",
+        "tags": [
+          "events"
+        ],
+        "summary": "RSVP to an event",
+        "operationId": "PUT--version-events--id-rsvp",
+        "produces": [
+          "application/xml",
+          "application/json",
+          "application/octet-stream",
+          "text/plain"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "description": "Your secret partner token",
+            "name": "X-Partner-Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "description": "The token you recieved when you authenticated the user",
+            "name": "X-User-Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "description": "",
+            "name": "id",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": "ID of the user for whom you are RSVP'ing. Must be within your scope as a user AND must be invited to the event.",
+            "name": "user_id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "formData",
+            "description": "yes: Coming. no: Not coming. tbd: No clue.",
+            "name": "status_cd",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": null,
+            "name": "number_of_youth_guests",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "in": "formData",
+            "description": null,
+            "name": "number_of_adult_guests",
+            "required": false,
+            "type": "integer"
+          }
+        ]
+      }
+    },
+    "/v1/events/{event_id}/attendance": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "#/definitions/EventDetailsEntity"
+            }
+          },
+          "401": {
+            "description": "401 Unauthorized user"
+          },
+          "404": {
+            "description": "404 Event not found"
+          }
+        },
+        "description": "",
+        "tags": [
+          "events"
+        ],
+        "summary": "Record attendance at an event",
+        "operationId": "POST--version-events--event_id-attendance",
+        "produces": [
+          "application/xml",
+          "application/json",
+          "application/octet-stream",
+          "text/plain"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "description": "Your secret partner token",
+            "name": "X-Partner-Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "description": "The token you recieved when you authenticated the user",
+            "name": "X-User-Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "description": "",
+            "name": "event_id",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": "ID of the user for whom you are RSVP'ing. Must be within your scope as a user AND must be invited to the event.",
+            "name": "event_trackers[user_id]",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "formData",
+            "description": "0: Did not attend. 1: Attended. 2: No clue.",
+            "name": "event_trackers[attendance_status_cd]",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": "How many adult guests will this person bring?",
+            "name": "event_trackers[number_of_adult_guests]",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "in": "formData",
+            "description": "How many youth guests will this person bring?",
+            "name": "event_trackers[number_of_youth_guests]",
+            "required": false,
+            "type": "integer"
+          }
+        ]
+      }
+    },
+    "/v1/mailing_lists": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "#/definitions/MailingListEntity"
+            }
+          },
+          "401": {
+            "description": "Unauthorized User"
+          }
+        },
+        "description": "",
+        "tags": [
+          "mailing_lists"
+        ],
+        "summary": "Returns a list of mailing lists relevant to the user",
+        "operationId": "GET--version-mailing_lists",
+        "produces": [
+          "application/xml",
+          "application/json",
+          "application/octet-stream",
+          "text/plain"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "description": "Your secret partner token",
+            "name": "X-Partner-Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "description": "The token you recieved when you authenticated the user",
+            "name": "X-User-Token",
+            "required": true,
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "/v1/mailing_lists/{id}": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "401": {
+            "description": "Unauthorized User"
+          },
+          "404": {
+            "description": "404 Mailing list not found"
+          }
+        },
+        "description": "",
+        "tags": [
+          "mailing_lists"
+        ],
+        "summary": "Post a message to a mailing list",
+        "operationId": "POST--version-mailing_lists--id",
+        "produces": [
+          "application/xml",
+          "application/json",
+          "application/octet-stream",
+          "text/plain"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "description": "Your secret partner token",
+            "name": "X-Partner-Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "description": "The token you recieved when you authenticated the user",
+            "name": "X-User-Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "description": "The ID of the list you want to post a message to",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": null,
+            "name": "message[subject]",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": null,
+            "name": "message[body]",
+            "required": false,
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "/v1/offline": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "401": {
+            "description": "Unauthorized User"
+          }
+        },
+        "description": "",
+        "tags": [
+          "offline"
+        ],
+        "summary": "Returns all troop data for cacheing prior to going offline",
+        "operationId": "GET--version-offline",
+        "produces": [
+          "application/xml",
+          "application/json",
+          "application/octet-stream",
+          "text/plain"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "description": "Your secret partner token",
+            "name": "X-Partner-Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "description": "The token you recieved when you authenticated the user",
+            "name": "X-User-Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "description": null,
+            "name": "troop_id",
+            "required": true,
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "/v1/photo_albums": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "#/definitions/PhotoAlbumEntity"
+            }
+          },
+          "401": {
+            "description": "Unauthorized User"
+          }
+        },
+        "description": "",
+        "tags": [
+          "photo_albums"
+        ],
+        "summary": "Returns a list of photo albums relevant to the user. Photos are not returned on this endpoint.",
+        "operationId": "GET--version-photo_albums",
+        "produces": [
+          "application/xml",
+          "application/json",
+          "application/octet-stream",
+          "text/plain"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "description": "Your secret partner token",
+            "name": "X-Partner-Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "description": "The token you recieved when you authenticated the user",
+            "name": "X-User-Token",
+            "required": true,
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "/v1/photo_albums/{id}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "#/definitions/PhotoAlbumEntity"
+            }
+          },
+          "401": {
+            "description": "401 Unauthorized user"
+          },
+          "404": {
+            "description": "404 Album not found"
+          }
+        },
+        "description": "",
+        "tags": [
+          "photo_albums"
+        ],
+        "summary": "Returns detailed information about a photo album, including photos",
+        "operationId": "GET--version-photo_albums--id",
+        "produces": [
+          "application/xml",
+          "application/json",
+          "application/octet-stream",
+          "text/plain"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "description": "Your secret partner token",
+            "name": "X-Partner-Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "description": "The token you recieved when you authenticated the user",
+            "name": "X-User-Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "description": null,
+            "name": "id",
+            "required": true,
+            "type": "string"
+          }
+        ]
+      },
+      "post": {
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "#/definitions/PhotoAlbumEntity"
+            }
+          },
+          "401": {
+            "description": "401 Unauthorized user"
+          },
+          "403": {
+            "description": "403 Unprivileged user"
+          },
+          "404": {
+            "description": "404 Album not found"
+          }
+        },
+        "description": "",
+        "tags": [
+          "photo_albums"
+        ],
+        "summary": "Upload a new photo to a photo album",
+        "operationId": "POST--version-photo_albums--id",
+        "produces": [
+          "application/xml",
+          "application/json",
+          "application/octet-stream",
+          "text/plain"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "description": "Your secret partner token",
+            "name": "X-Partner-Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "description": "The token you recieved when you authenticated the user",
+            "name": "X-User-Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "description": null,
+            "name": "id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": null,
+            "name": "photo_file_extension",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": null,
+            "name": "photo_file_content",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": null,
+            "name": "album_name",
+            "required": false,
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "/v1/tokens": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "#/definitions/UserPrivilegesEntity"
+            }
+          },
+          "401": {
+            "description": "401 Unauthorized user"
+          }
+        },
+        "description": "",
+        "tags": [
+          "tokens"
+        ],
+        "summary": "Gets authentication and privilege information for a user account",
+        "operationId": "POST--version-tokens",
+        "produces": [
+          "application/xml",
+          "application/json",
+          "application/octet-stream",
+          "text/plain"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "description": "Your secret partner token",
+            "name": "X-Partner-Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "description": "TroopTrack user name",
+            "name": "X-Username",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "description": "Password of the user",
+            "name": "X-User-Password",
+            "required": true,
+            "type": "string"
+          }
+        ]
+      },
+      "get": {
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "#/definitions/UserPrivilegesEntity"
+            }
+          },
+          "401": {
+            "description": "401 Unauthorized user"
+          }
+        },
+        "description": "",
+        "tags": [
+          "tokens"
+        ],
+        "summary": "Returns detailed information about a user's privileges",
+        "operationId": "GET--version-tokens",
+        "produces": [
+          "application/xml",
+          "application/json",
+          "application/octet-stream",
+          "text/plain"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "description": "Your secret partner token",
+            "name": "X-Partner-Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "description": "The token you recieved when you authenticated the user",
+            "name": "X-User-Token",
+            "required": true,
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "/v1/user_achievements/parameters": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "401": {
+            "description": "Unauthorized User"
+          }
+        },
+        "description": "",
+        "tags": [
+          "user_achievements"
+        ],
+        "summary": "Returns a list of possible values to be used in querying",
+        "operationId": "GET--version-user_achievements-parameters",
+        "produces": [
+          "application/xml",
+          "application/json",
+          "application/octet-stream",
+          "text/plain"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "description": "Your secret partner token",
+            "name": "X-Partner-Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "description": "The token you recieved when you authenticated the user",
+            "name": "X-User-Token",
+            "required": true,
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "/v1/user_achievements": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "401": {
+            "description": "Unauthorized User"
+          }
+        },
+        "description": "",
+        "tags": [
+          "user_achievements"
+        ],
+        "summary": "Returns a list of achievements earned by users based on query parameters.\n              Query parameters can be combined as desired.\n              Award type id is required if achievement id is provided",
+        "operationId": "GET--version-user_achievements",
+        "produces": [
+          "application/xml",
+          "application/json",
+          "application/octet-stream",
+          "text/plain"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "description": "Your secret partner token",
+            "name": "X-Partner-Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "description": "The token you recieved when you authenticated the user",
+            "name": "X-User-Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "description": null,
+            "name": "award_type_id",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "description": null,
+            "name": "user_id",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "description": null,
+            "name": "patrol_id",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "description": null,
+            "name": "achievement_id",
+            "required": false,
+            "type": "integer"
+          }
+        ]
+      }
+    },
+    "/v1/user_achievements/{id}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "401": {
+            "description": "401 Unauthorized user"
+          },
+          "404": {
+            "description": "404 User not found"
+          }
+        },
+        "description": "",
+        "tags": [
+          "user_achievements"
+        ],
+        "summary": "Returns achievment details, including requirements, for a given achievement",
+        "operationId": "GET--version-user_achievements--id",
+        "produces": [
+          "application/xml",
+          "application/json",
+          "application/octet-stream",
+          "text/plain"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "description": "Your secret partner token",
+            "name": "X-Partner-Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "description": "The token you recieved when you authenticated the user",
+            "name": "X-User-Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "description": "Id of the achievement being updated",
+            "name": "id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "description": "Id of the Award Type for the achievement being updated",
+            "name": "award_type_id",
+            "required": true,
+            "type": "integer"
+          }
+        ]
+      },
+      "post": {
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "401": {
+            "description": "401 Insufficient Privileges"
+          },
+          "404": {
+            "description": "404 Achievement not found"
+          }
+        },
+        "description": "",
+        "tags": [
+          "user_achievements"
+        ],
+        "summary": "Update achievment details, including requirements, for a given achievement",
+        "operationId": "POST--version-user_achievements--id",
+        "produces": [
+          "application/xml",
+          "application/json",
+          "application/octet-stream",
+          "text/plain"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "description": "Your secret partner token",
+            "name": "X-Partner-Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "description": "The token you recieved when you authenticated the user",
+            "name": "X-User-Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "description": "Id of the user achievement being updated",
+            "name": "id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "formData",
+            "description": "Id of the Award Type for the achievement being updated",
+            "name": "award_type_id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "formData",
+            "description": "Date the achievement was completed in YYYY-MM-DD format",
+            "name": "achievement[completed_on]",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": "Base 64 encoded image content of the front of an award card for the achievement. Currently ignored unless the achievement is a BSA Merit Badge.",
+            "name": "achievement[award_card_front_image_content]",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": "File extension of the award card images - must be the same type for the front and back, if included. Currently ignored unless the achievement is a BSA Merit Badge.",
+            "name": "achievement[award_card_images_type]",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": "Base 64 encoded image content of the back of an award card for the achievement. Currently ignored unless the achievement is a BSA Merit Badge.",
+            "name": "achievement[award_card_back_image_content]",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": "Id of the requirement to be updated",
+            "name": "achievement[children][id]",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "in": "formData",
+            "description": "Date the requirement was completed in YYYY-MM-DD format",
+            "name": "achievement[children][completed_on]",
+            "required": false,
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "/v1/users": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "401": {
+            "description": "Unauthorized User"
+          }
+        },
+        "description": "",
+        "tags": [
+          "users"
+        ],
+        "summary": "Returns a list of users",
+        "operationId": "GET--version-users",
+        "produces": [
+          "application/xml",
+          "application/json",
+          "application/octet-stream",
+          "text/plain"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "description": "Your secret partner token",
+            "name": "X-Partner-Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "description": "The token you recieved when you authenticated the user",
+            "name": "X-User-Token",
+            "required": true,
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "/v1/users/{id}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "401": {
+            "description": "401 Unauthorized user"
+          },
+          "404": {
+            "description": "404 User not found"
+          }
+        },
+        "description": "",
+        "tags": [
+          "users"
+        ],
+        "summary": "Returns detailed information about a user",
+        "operationId": "GET--version-users--id",
+        "produces": [
+          "application/xml",
+          "application/json",
+          "application/octet-stream",
+          "text/plain"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "description": "Your secret partner token",
+            "name": "X-Partner-Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "description": "The token you recieved when you authenticated the user",
+            "name": "X-User-Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "description": "",
+            "name": "id",
+            "required": false,
+            "type": "string"
+          }
+        ]
+      },
+      "post": {
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "401": {
+            "description": "401 Unauthorized user"
+          },
+          "403": {
+            "description": "403 Unprivileged user"
+          },
+          "404": {
+            "description": "404 User not found"
+          }
+        },
+        "description": "",
+        "tags": [
+          "users"
+        ],
+        "summary": "Update detailed information about a user",
+        "operationId": "POST--version-users--id",
+        "produces": [
+          "application/xml",
+          "application/json",
+          "application/octet-stream",
+          "text/plain"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "description": "Your secret partner token",
+            "name": "X-Partner-Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "description": "The token you recieved when you authenticated the user",
+            "name": "X-User-Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "description": "",
+            "name": "id",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": null,
+            "name": "user[last_name]",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": null,
+            "name": "user[first_name]",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": null,
+            "name": "user[email]",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": null,
+            "name": "user[born_on]",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": null,
+            "name": "user[home_phone]",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": null,
+            "name": "user[cell_phone]",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": null,
+            "name": "user[profile_photo_file_name]",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": null,
+            "name": "user[profile_photo_file_content]",
+            "required": false,
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "/v1/youths": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "401": {
+            "description": "401 Unauthorized user"
+          },
+          "403": {
+            "description": "403 Unprivileged user"
+          }
+        },
+        "description": "",
+        "tags": [
+          "youths"
+        ],
+        "summary": "Create a youth",
+        "operationId": "POST--version-youths",
+        "produces": [
+          "application/xml",
+          "application/json",
+          "application/octet-stream",
+          "text/plain"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "description": "Your secret partner token",
+            "name": "X-Partner-Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "description": "The token you recieved when you authenticated the user",
+            "name": "X-User-Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": null,
+            "name": "youth[last_name]",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": null,
+            "name": "youth[first_name]",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": null,
+            "name": "youth[email]",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": null,
+            "name": "youth[born_on]",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": null,
+            "name": "youth[scout]",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": null,
+            "name": "youth[home_phone]",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": null,
+            "name": "youth[cell_phone]",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": null,
+            "name": "youth[patrol_id]",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "in": "formData",
+            "description": null,
+            "name": "youth[household_id]",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "in": "formData",
+            "description": null,
+            "name": "youth[profile_photo]",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "description": null,
+            "name": "youth[leadership_position_id]",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "in": "formData",
+            "description": null,
+            "name": "youth[create_money_account]",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "in": "formData",
+            "description": null,
+            "name": "youth[send_invite]",
+            "required": false,
+            "type": "boolean"
+          }
+        ]
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "achievements",
+      "description": "Operations about achievements"
+    },
+    {
+      "name": "award_types",
+      "description": "Operations about award_types"
+    },
+    {
+      "name": "events",
+      "description": "Operations about events"
+    },
+    {
+      "name": "mailing_lists",
+      "description": "Operations about mailing_lists"
+    },
+    {
+      "name": "offline",
+      "description": "Operations about offlines"
+    },
+    {
+      "name": "photo_albums",
+      "description": "Operations about photo_albums"
+    },
+    {
+      "name": "tokens",
+      "description": "Operations about tokens"
+    },
+    {
+      "name": "user_achievements",
+      "description": "Operations about user_achievements"
+    },
+    {
+      "name": "users",
+      "description": "Operations about users"
+    },
+    {
+      "name": "youths",
+      "description": "Operations about youths"
+    }
+  ],
+  "host": "trooptrack.com",
+  "basePath": "/api",
+  "schemes": [
+    "https"
+  ],
+  "definitions": {
+    "AchievementEntity": {
+      "properties": {
+        "achievement_id": {
+          "description": "ID of the Achievement Record",
+          "$ref": "#/definitions/id"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the achievement"
+        },
+        "children": {
+          "type": "array",
+          "description": "Array of requirements",
+          "items": {
+            "$ref": "#/definitions/AchievementEntity"
+          }
+        },
+        "description": {
+          "type": "string",
+          "description": "Detailed description of the achievement"
+        }
+      }
+    },
+    "AwardTypeEntity": {
+      "properties": {
+        "active_achievements": {
+          "type": "array",
+          "description": "Array of Achievements for this award type",
+          "items": {
+            "$ref": "#/definitions/AchievementEntity"
+          }
+        },
+        "award_type_id": {
+          "type": "integer",
+          "description": "ID of the Award Type Record"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the Award Type"
+        }
+      }
+    },
+    "EventDetailsEntity": {
+      "properties": {
+        "rsvp_deadline": {
+          "type": "string",
+          "description": "Date by which RSVPs must be submitted"
+        },
+        "event_id": {
+          "type": "integer",
+          "description": "ID of the event record"
+        },
+        "is_registration_closed?": {
+          "type": "string",
+          "description": "Indicates if registration for this event is closed."
+        },
+        "hiking_miles": {
+          "type": "string",
+          "description": "Number of hiking miles that will occur at this event"
+        },
+        "payment_required_to_rsvp": {
+          "type": "string",
+          "description": "Indicates if payment is required to RSVP for this event. You cannot RSVP through the API if this is true."
+        },
+        "activity_at": {
+          "type": "string",
+          "description": "Start time of the event in 2014-11-20T02:00:00.000-06:00 format"
+        },
+        "end_at": {
+          "type": "string",
+          "description": "End time of the event in 2014-11-20T02:00:00.000-06:00 format"
+        },
+        "event_type": {
+          "type": "string",
+          "description": "Type of the event (Campout, Hike, Meeting, etc)"
+        },
+        "vcal": {
+          "type": "string",
+          "description": "VCAL representation of the event"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the event"
+        },
+        "adult_fee": {
+          "type": "string",
+          "description": "Event fees required for each adult attending"
+        },
+        "camping_nights": {
+          "type": "string",
+          "description": "Number of nights of camping that will occur at this event"
+        },
+        "dues": {
+          "type": "string",
+          "description": "Event fees required for each youth attending"
+        },
+        "guests_allowed": {
+          "type": "string",
+          "description": "Indicates whether guests are allowed"
+        },
+        "canoeing_miles": {
+          "type": "string",
+          "description": "Number of canoeing miles that will occur at this event"
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the event"
+        },
+        "service_hours": {
+          "type": "string",
+          "description": "Number of service hours per attendee that will occur at this event"
+        }
+      }
+    },
+    "EventEntity": {
+      "properties": {
+        "location": {
+          "type": "string",
+          "description": "Location of the event"
+        },
+        "event_type": {
+          "type": "string",
+          "description": "Type of the event (Campout, Hike, Meeting, etc)"
+        },
+        "is_registration_closed?": {
+          "type": "string",
+          "description": "Indicates if registration for this event is closed."
+        },
+        "color": {
+          "type": "string",
+          "description": "Color of the event, as specified by the creator"
+        },
+        "payment_required_to_rsvp": {
+          "type": "string",
+          "description": "Indicates if payment is required to RSVP for this event. You cannot RSVP through the API if this is true."
+        },
+        "activity_at": {
+          "type": "string",
+          "description": "Start time of the event in 2014-11-20T02:00:00.000-06:00 format"
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the event"
+        },
+        "end_at": {
+          "type": "string",
+          "description": "End time of the event in 2014-11-20T02:00:00.000-06:00 format"
+        },
+        "text_color": {
+          "type": "string",
+          "description": "Color for text that is visible on a background of the color of the event"
+        }
+      }
+    },
+    "EventTypeEntity": {
+      "properties": {
+        "color": {
+          "type": "string",
+          "description": "Color used to display events of this type on the TroopTrack calendar"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the event type (Campout, Meeting, etc)"
+        },
+        "event_type_id": {
+          "type": "integer",
+          "description": "ID of the event type record"
+        }
+      }
+    },
+    "MailingListEntity": {
+      "properties": {
+        "email": {
+          "type": "string",
+          "description": "Email address of the mailing list"
+        },
+        "mailing_list_id": {
+          "type": "integer",
+          "description": "ID of the mailing list record"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name used to identify the mailing list"
+        }
+      }
+    },
+    "TroopPhotoEntity": {
+      "properties": {
+        "troop_photo_id": {
+          "type": "integer",
+          "description": "ID of the Troop Photo record"
+        },
+        "photo": {
+          "type": "integer",
+          "description": "URL of the photo"
+        }
+      }
+    },
+    "PhotoAlbumEntity": {
+      "properties": {
+        "photo_album_id": {
+          "type": "integer",
+          "description": "ID of the photo album record"
+        },
+        "taken_on": {
+          "type": "string",
+          "description": "Date the album was taken on as specified by the user"
+        },
+        "photo_count": {
+          "type": "integer",
+          "description": "Number of photos in this album"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name used to identify the photo album"
+        },
+        "troop_photos": {
+          "type": "array",
+          "description": "An array of troop photos",
+          "items": {
+            "$ref": "#/definitions/TroopPhotoEntity"
+          }
+        }
+      }
+    },
+    "UserPrivilegesEntity": {
+      "properties": {
+        "privileges": {
+          "type": "array",
+          "description": "Names of privileges this user has.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "troop_type": {
+          "type": "string",
+          "description": "Description of the type of unit this user belongs to."
+        },
+        "troop": {
+          "type": "string",
+          "description": "Full number or name identifying the unit this user belongs to."
+        },
+        "troop_type_id": {
+          "type": "integer",
+          "description": "ID of the unit type record"
+        },
+        "cache_scope": {
+          "type": "string",
+          "description": "This value is used to identify the contents of the offline cache that apply to this user."
+        },
+        "troop_number": {
+          "type": "string",
+          "description": "Number of the unit this user belongs to."
+        },
+        "troop_id": {
+          "type": "integer",
+          "description": "ID of the unit this user belongs to"
+        },
+        "user_id": {
+          "type": "integer",
+          "description": "ID of the user record"
+        },
+        "token": {
+          "type": "string",
+          "description": "API authentication token for this user"
+        }
+      }
+    }
+  }
+}
+

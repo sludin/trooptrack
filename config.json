@@ -1,0 +1,9 @@
+{
+    "api_url":            "https://trooptrack.com:443/api/swagger_doc",
+    "java":               "/usr/bin/java",
+    "swagger-codegen":    "../swagger-codegen/modules/swagger-codegen-cli/target/swagger-codegen-cli.jar",
+    "swagger-tools":      "/opt/local/bin/swagger-tools",
+    "swagger2_dir":       "swagger2",
+    "swagger2_schema":    "tt.json",
+    "swagger12_dir":      "swagger1.2"
+}
