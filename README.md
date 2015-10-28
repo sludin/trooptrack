@@ -27,18 +27,18 @@ The tricks are:
 
 The conversion tool is [swagger-codegen](https://github.com/swagger-api/swagger-codegen#modifying-the-client-library-format)
 
-This is a java library that support the creation of API libraries in
-many languages including perl.  getting it build and working was
-tricky, but it is managabale by following the instrictions on the
-referenced site.
+This is a java library that supports the creation of API libraries in
+many languages including perl.  Getting it built and working was
+tricky, but it is managable by following the instrictions on the
+referenced site.  For reference I am doing it on OS X 10.10.
 
 What is included:
 
-- add_return_info.pl: script to modify the schema for 200 repsones ( see above )
-- example.pl: simple example for usin the generated libraries to call the API
+- add_return_info.pl: script to modify the schema for 200 repsonses ( see above )
+- example.pl: simple example for using the generated libraries to call the API
 - lib: directory that holds the perl libs.  use libs './lib' to include for testing
-- swagger1.2: contains the 1.2 schemas
-- swagger2.0: contains the 2.0 schema
+- swagger1.2: contains the 1.2 schemas ( pulled directly from TroopTrack )
+- swagger2.0: contains the 2.0 schema ( converted and modified as per above )
 
 TODO:
 
