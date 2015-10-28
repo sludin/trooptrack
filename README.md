@@ -12,8 +12,8 @@ schema.
 The NPM package [swagger-tools](https://www.npmjs.com/package/swagger-tools) made this reasonably simple.
 
 The tricks are:
-- The 1.2 schema references #/description/String and
-  #/description/id.  Neither of these are understood by the
+- The 1.2 schema references '#/description/String' and
+  '#/description/id'.  Neither of these are understood by the
   converter. There is probably a simpler way to do this, but
   I searched and replaced the former with 'type': 'string' and
   the latter with 'type': 'integer'.  This had to happen
